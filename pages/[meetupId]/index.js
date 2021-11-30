@@ -1,6 +1,6 @@
-import { MongoClient, ObjectId } from 'mongodb';
-import Head from 'next/head';
-import MeetupDetail from '../../components/meetups/MeetupDetail';
+import { MongoClient, ObjectId } from "mongodb";
+import Head from "next/head";
+import MeetupDetail from "../../components/meetups/MeetupDetail";
 
 const MeetupDetails = (props) => {
   return (
@@ -21,12 +21,12 @@ const MeetupDetails = (props) => {
 
 export async function getStaticPaths() {
   const client = await MongoClient.connect(
-    'mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority'
+    "mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority"
   );
 
   const db = client.db();
 
-  const meetupsCollection = db.collection('mymeetups');
+  const meetupsCollection = db.collection("mymeetups");
 
   //metoda find(), pierwszy argument to które dokumenty ma znależć, puste to wszystko, drugi to które pola z tych dokumentów
   const meetup = await meetupsCollection.find({}, { _id: 1 }).toArray();
@@ -34,7 +34,7 @@ export async function getStaticPaths() {
   client.close();
 
   return {
-    fallback: false,
+    fallback: "blocking",
     paths: meetup.map((el) => ({ params: { meetupId: el._id.toString() } })),
   };
 }
@@ -45,12 +45,12 @@ export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
 
   const client = await MongoClient.connect(
-    'mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority'
+    "mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority"
   );
 
   const db = client.db();
 
-  const meetupsCollection = db.collection('mymeetups');
+  const meetupsCollection = db.collection("mymeetups");
 
   const selectedMeetup = await meetupsCollection.findOne({
     _id: ObjectId(meetupId),
