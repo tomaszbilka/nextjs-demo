@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import { MongoClient } from 'mongodb';
+import Head from "next/head";
+import { MongoClient } from "mongodb";
 
-import MeetupList from '../components/meetups/MeetupList';
+import MeetupList from "../components/meetups/MeetupList";
 
 const HomePage = (props) => {
   return (
@@ -13,7 +13,7 @@ const HomePage = (props) => {
           content='Browse a list of active React meetups'
         />
       </Head>
-      <MeetupList meetups={props.meetups} />;
+      <MeetupList meetups={props.meetups} />
     </>
   );
 };
@@ -33,12 +33,12 @@ const HomePage = (props) => {
 export async function getStaticProps() {
   //fetch data from an API
   const client = await MongoClient.connect(
-    'mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority'
+    "mongodb+srv://admin:admin@nextjs.lkgt2.mongodb.net/meetups?retryWrites=true&w=majority"
   );
 
   const db = client.db();
 
-  const meetupsCollection = db.collection('mymeetups');
+  const meetupsCollection = db.collection("mymeetups");
 
   const meetups = await meetupsCollection.find().toArray();
 
